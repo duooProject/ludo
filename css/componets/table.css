@@ -6,17 +6,15 @@
   grid-auto-flow: row;
   grid-template-areas:
     "score bot ."
-    "bot1 table bot2"
+    ". table ."
     "CardsDeck userCards .";
 }
 
-.bot1 { grid-area: bot1; }
+
 
 .table { grid-area: table; }
 
 .bot { grid-area: bot; }
-
-.bot2 { grid-area: bot2; }
 
 .userCards { grid-area: userCards; }
 
