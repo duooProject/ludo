@@ -1,7 +1,16 @@
 var cards=[
   {
-    id:"T7"
-  }
+    id:1,
+  },
+  {
+    id:2,
+  },
+  {
+    id:3
+  },
+  {
+    i:4
+  },
 ]
 function Player(){
   return {
@@ -11,11 +20,20 @@ function Player(){
   }
 }
 
+function Deck(){
+  return{
+
+    checkDeck:checkDeck,
+  }
+}
+
+
 function startGame() {
 
 }
 
 function Game(playerCount) {
+
   return {
     deck:[],
     table:[],
