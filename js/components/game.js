@@ -1,3 +1,8 @@
+var cards=[
+  {
+    id:"T7"
+  }
+]
 function Player(){
   return {
   hand:[],
