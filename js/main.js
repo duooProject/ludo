@@ -1,10 +1,11 @@
 function onStartGame(){
-  var game = Game();
-  var gameContainer = GameContainer();
-
-  
-  document.body.innerHTML = ''; 
-  document.body.appendChild(gameContainer.renderComponent());
+  var currentGame = Game();
+  currentGame.startGame()
+   var gameContainer = GameContainer();
+     document.body.innerHTML = ''; 
+    document.body.appendChild(gameContainer.renderComponent());
+   refreshGameContainer(currentGame)
+ 
 }
 
 document.addEventListener("DOMContentLoaded", function () {

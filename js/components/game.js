@@ -242,8 +242,8 @@ var cards = [
 ];
 function getCards(deck) {
   for (var i = 0; i < 3; i++) {
-    var cardIndex = Math.floor(Math.random() * this.deck.length);
-    this.cards.push(this.deck[cardIndex]);
+    var cardIndex = Math.floor(Math.random() * deck.length);
+    this.cards.push(deck[cardIndex]);
     deck.splice(cardIndex, 1);
   }
 }
@@ -254,12 +254,16 @@ function Player(type) {
     getCards: getCards,
     myCard: [],
     score: 0,
+    hisTurn:false,
     calculateScores:calculateScores,
   };
 }
+
 function initPlayers(count) {
   this.players[0] = Player("bot");
   this.players[1] = Player("human");
+  var turn=Math.floor(Math.random()*2)
+  this.players[turn].hisTurn=true
 }
 function removeCardFromHand(hand, card) {
   for (var i = 0; i < hand.length; i++) {
@@ -270,6 +274,7 @@ function removeCardFromHand(hand, card) {
   }
 }
 function playCard(player, card, selectedTableCards, table) {
+  
   if (selectedTableCards.length === 0) {
     table.push(card);
     removeCardFromHand(player.cards, card);
@@ -324,38 +329,34 @@ function calculateScores() {
 }
 
 function startNewRound() {
-  var lastCardDraged =null;
-  for (var i = 0; i < 4; i++) {
-    var cardIndex = Math.floor(Math.random() * this.deck.length);
-    this.table.push(this.deck[cardIndex]);
-    this.deck.splice(cardIndex, 1);
-  }
+
   for (var i = 0; i < this.players.length; i++) {
     this.players[i].getCards(this.deck);
   }
-
-  this.round--;
+  refreshPlayerHand()
 }
 
 function newMatch() {
   this.deck = cards.slice();
   this.table = [];
   this.round = 6;
-  while (this.round > 0) {
-    this.startNewRound()
+  for (var i = 0; i < 4; i++) {
+    var cardIndex = Math.floor(Math.random() * this.deck.length);
+    this.table.push(this.deck[cardIndex]);
+    this.deck.splice(cardIndex, 1);
   }
-  this.players[0].calculateScores()
-  this.players[1].calculateScores()
+  this.startNewRound()
+
 }
 
 function startGame() {
   this.initPlayers(2);
-  while (
-    this.players[0].score < this.targetScore &&
-   this.players[1].score < this.targetScore
-  ) {
+  // while (
+  //   this.players[0].score < this.targetScore &&
+  //  this.players[1].score < this.targetScore
+  // ) {
     this.newMatch();
-  }
+  // }
   if (this.players[0].score >= this.targetScore) {
     alert("Bot wins!");
   } else if (this.players[1].score >= this.targetScore) {
