@@ -14,7 +14,6 @@ function StartCard(onStart) {
   mainDiv.addClass("startCard");
   startBtn.addEvents("click", function () {
     onStart();
-    document.getElementById("startCardContainer").style.display = "none";
   });
   mainDiv.addChild(startBtn);
   var cover = component("div");
