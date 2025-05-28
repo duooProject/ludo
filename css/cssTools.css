@@ -5,6 +5,10 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 5px;
+}
+.row > div{
+    width: 33%;
 }
 .hg-3{
     height: 20vh;

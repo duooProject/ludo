@@ -10,53 +10,29 @@
   flex-direction: column;
   justify-content: space-around
 }
-.card{
-  height: 100%;
-  width: 100%;
+.card{}
+.card img{
+  width: 50%;
+  border-radius: 10px;
 }
+
 .card-backgroung{
   background-image: url('../../media/img/chkoubaBackGround.png');
   background-size: contain;
 }
 .table-cell{
   width: 33%;
-  height: 80px;
+  height: 10vh;
 }
-
-.flip-card {
-
-  border: 1px solid #f1f1f1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+.empty-cell{
+  height: 20vh;
 }
-
-.flip-card-inner {
-  position: relative;
+.scoreCell{
+  font-size: 100px;
+  font-weight: 900;
   width: 100%;
-  height: 100%;
   text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
 }
-
-.flip {
-  transform: rotateY(180deg);
+.selected img{
+  box-shadow: 0 0 10px #fff;
 }
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-/* Style the back side */
-.flip-card-back {
-  transform: rotateY(180deg);
-}
-

@@ -22,7 +22,7 @@ function GameContainer() {
     row1.addChild(botHandCell);
 
     // Create empty cell
-    row1.addChild(component("div").addClass("grid-cell"));
+    row1.addChild(component("div").addClass("grid-cell").addClass('empty-cell'));
 
 
 
@@ -31,7 +31,7 @@ function GameContainer() {
     tableRow.addClass("row hg-6");
 
     //Create empty cell
-    tableRow.addChild(component("div").addClass("grid-cell"));
+    tableRow.addChild(component("div").addClass("grid-cell").addClass('empty-cell'));
 
     // Create table cell
     var tableCell = component("div");
@@ -65,7 +65,7 @@ function GameContainer() {
     var playerHandRow = component("div");
     playerHandRow.addClass("row hg-3");
 
-    // Create empty cell 
+    // Create score cell 
     playerHandRow.addChild(component("div").addClass("scoreCell").addId("scoreCell-player"))   
 
     // Create player hand cell
@@ -74,7 +74,7 @@ function GameContainer() {
 
     playerHandRow.addChild(playerHandCell);
     // Create empty cell
-    playerHandRow.addChild(component("div").addClass("grid-cell"));
+    playerHandRow.addChild(component("div").addClass("grid-cell").addClass('empty-cell'));
 
 
     // Add all rows to the main div

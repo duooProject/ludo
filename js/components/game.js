@@ -240,10 +240,20 @@ var cards = [
     photo: "./media/img/cards/50.png",
   },
 ];
+function bot_chose_playing(bot_hand_cards, table){
+  for(var i=0;i<table.length;i++){
+    for(var j =0;j<bot_hand_cards.length;j++)
+      if(bot_hand_cards[j]===table[i]){
+        return {card:bot_hand_cards[i],selectedCards:table[i]}
+      }
+  }
+  return {card:bot_hand_cards[Math.floor(Math.random()*bot_hand_cards.length)],selectedCards:[]}
+}
+
 function getCards(deck) {
   for (var i = 0; i < 3; i++) {
-    var cardIndex = Math.floor(Math.random() * this.deck.length);
-    this.cards.push(this.deck[cardIndex]);
+    var cardIndex = Math.floor(Math.random() * deck.length);
+    this.cards.push(deck[cardIndex]);
     deck.splice(cardIndex, 1);
   }
 }
@@ -254,12 +264,14 @@ function Player(type) {
     getCards: getCards,
     myCard: [],
     score: 0,
+    hisTurn:false,
     calculateScores:calculateScores,
   };
 }
 function initPlayers(count) {
   this.players[0] = Player("bot");
   this.players[1] = Player("human");
+  this.players[1].hisTurn=true
 }
 function removeCardFromHand(hand, card) {
   for (var i = 0; i < hand.length; i++) {
@@ -269,7 +281,12 @@ function removeCardFromHand(hand, card) {
     }
   }
 }
-function playCard(player, card, selectedTableCards, table) {
+function playCard(player, card, selectedTableCards, table,currentGame) {
+  player.hisTurn=false
+  currentGame.players.forEach(function(pl){
+    if(pl.visible!==player.visible)
+      pl.hisTurn=true
+  })
   if (selectedTableCards.length === 0) {
     table.push(card);
     removeCardFromHand(player.cards, card);
@@ -322,40 +339,33 @@ function calculateScores() {
     this.score+=1
   }
 }
-
 function startNewRound() {
-  var lastCardDraged =null;
+
+  for (var i = 0; i < this.players.length; i++) {
+    this.players[i].getCards(this.deck);
+  }
+  refreshPlayerHand(this)
+}
+function newMatch() {
+  this.deck = cards.slice();
+  this.table = [];
+  this.round = 6;
   for (var i = 0; i < 4; i++) {
     var cardIndex = Math.floor(Math.random() * this.deck.length);
     this.table.push(this.deck[cardIndex]);
     this.deck.splice(cardIndex, 1);
   }
-  for (var i = 0; i < this.players.length; i++) {
-    this.players[i].getCards(this.deck);
-  }
+  this.startNewRound()
 
-  this.round--;
 }
-
-function newMatch() {
-  this.deck = cards.slice();
-  this.table = [];
-  this.round = 6;
-  while (this.round > 0) {
-    this.startNewRound()
-  }
-  this.players[0].calculateScores()
-  this.players[1].calculateScores()
-}
-
 function startGame() {
   this.initPlayers(2);
-  while (
-    this.players[0].score < this.targetScore &&
-   this.players[1].score < this.targetScore
-  ) {
+  // while (
+  //   this.players[0].score < this.targetScore &&
+  //  this.players[1].score < this.targetScore
+  // ) {
     this.newMatch();
-  }
+  // }
   if (this.players[0].score >= this.targetScore) {
     alert("Bot wins!");
   } else if (this.players[1].score >= this.targetScore) {
