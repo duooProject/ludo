@@ -1,8 +1,6 @@
 function component(tag) {
-  var stat = {};
   return {
     tag: tag,
-    stat: stat,
     id: "",
     classes: [],
     child: [],

@@ -6,6 +6,9 @@
   border-radius: 10px;
   border: 5px solid brown;
   background-image: url("../../media/img/table.avif");
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around
 }
 .card{
   height: 100%;
