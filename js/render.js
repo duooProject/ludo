@@ -1,4 +1,4 @@
-function refreshPlayerHand(player, playerType, table) {
+function refreshPlayerHand(player, playerType, table,currentGame) {
   if (playerType === "player") {
     var elements = document.querySelector("#playerHandCell");
     elements.innerHTML =""
@@ -8,7 +8,8 @@ function refreshPlayerHand(player, playerType, table) {
           card,
           "",
           { onPlay: onPlay, player: player },
-          table
+          table,
+          currentGame
         ).renderComponent()
       );
     });
@@ -17,20 +18,20 @@ function refreshPlayerHand(player, playerType, table) {
     elements.innerHTML =""
     player.cards.forEach(function (card) {
       elements.appendChild(
-        CardComponent(card, "hide", { player: player }, table).renderComponent()
+        CardComponent(card, "hide", { player: player }, table,currentGame).renderComponent()
       );
     });
   }
 }
 
-function refreshTable(table) {
+function refreshTable(table,currentGame) {
   var elements = document.querySelectorAll("#tableCell .table-cell");
   elements.forEach(function (element) {
     element.innerHTML = "";
   });
   table.forEach(function (card, index) {
     elements[index].appendChild(
-      CardComponent(card, "", { onSelect: onSelect }).renderComponent()
+      CardComponent(card, "", { onSelect: onSelect},table,currentGame).renderComponent()
     );
   });
 }
@@ -40,7 +41,7 @@ function refreshGameContainer(currentGame) {
     currentGame.players[1].score;
   document.getElementById("scoreCell-bot").innerText =
     currentGame.players[0].score;
-  refreshTable(currentGame.table);
-  refreshPlayerHand(currentGame.players[0], "bot", currentGame.table);
-  refreshPlayerHand(currentGame.players[1], "player", currentGame.table);
+  refreshTable(currentGame.table,currentGame);
+  refreshPlayerHand(currentGame.players[0], "bot", currentGame.table,currentGame);
+  refreshPlayerHand(currentGame.players[1], "player", currentGame.table,currentGame);
 }

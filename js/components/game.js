@@ -240,6 +240,16 @@ var cards = [
     photo: "./media/img/cards/50.png",
   },
 ];
+function bot_chose_playing(bot_hand_cards, table){
+  for(var i=0;i<table.length;i++){
+    for(var j =0;j<bot_hand_cards.length;j++)
+      if(bot_hand_cards[j]===table[i]){
+        return {card:bot_hand_cards[i],selectedCards:table[i]}
+      }
+  }
+  return {card:bot_hand_cards[Math.floor(Math.random()*bot_hand_cards.length)],selectedCards:[]}
+}
+
 function getCards(deck) {
   for (var i = 0; i < 3; i++) {
     var cardIndex = Math.floor(Math.random() * deck.length);
@@ -258,12 +268,10 @@ function Player(type) {
     calculateScores:calculateScores,
   };
 }
-
 function initPlayers(count) {
   this.players[0] = Player("bot");
   this.players[1] = Player("human");
-  var turn=Math.floor(Math.random()*2)
-  this.players[turn].hisTurn=true
+  this.players[1].hisTurn=true
 }
 function removeCardFromHand(hand, card) {
   for (var i = 0; i < hand.length; i++) {
@@ -273,8 +281,12 @@ function removeCardFromHand(hand, card) {
     }
   }
 }
-function playCard(player, card, selectedTableCards, table) {
-  
+function playCard(player, card, selectedTableCards, table,currentGame) {
+  player.hisTurn=false
+  currentGame.players.forEach(function(pl){
+    if(pl.visible!==player.visible)
+      pl.hisTurn=true
+  })
   if (selectedTableCards.length === 0) {
     table.push(card);
     removeCardFromHand(player.cards, card);
@@ -327,15 +339,13 @@ function calculateScores() {
     this.score+=1
   }
 }
-
 function startNewRound() {
 
   for (var i = 0; i < this.players.length; i++) {
     this.players[i].getCards(this.deck);
   }
-  refreshPlayerHand()
+  refreshPlayerHand(this)
 }
-
 function newMatch() {
   this.deck = cards.slice();
   this.table = [];
@@ -348,7 +358,6 @@ function newMatch() {
   this.startNewRound()
 
 }
-
 function startGame() {
   this.initPlayers(2);
   // while (
